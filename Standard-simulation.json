@@ -1,0 +1,1471 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Standard-simulation",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://192.168.1.99:8010"
+    }
+  ],
+  "paths": {
+    "/": {
+      "parameters": [],
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "User Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {}
+                  },
+                  "x-examples": {
+                    "example-1": [
+                      "abc1",
+                      "abc3",
+                      "abdc",
+                      "abc12"
+                    ]
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": [
+                      "abc1",
+                      "abc3",
+                      "abdc",
+                      "abc12"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "",
+        "description": ""
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "uuid": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "type": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "dst_phy_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "file_path": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "uuid",
+                    "type",
+                    "dst_phy_id",
+                    "file_path"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "uuid": "abc12",
+                      "type": "CAN-SIM",
+                      "dst_phy_id": "can1",
+                      "file_path": "/root/simulations/testproj/cansim.simod"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "uuid": "abc12",
+                      "type": "CAN-SIM",
+                      "dst_phy_id": "can1",
+                      "file_path": "/root/simulations/testproj/cansim.simod"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 20,
+                      "msg": "type CAN-SIeM invalid"
+                    }
+                  },
+                  "example-2": {
+                    "value": {
+                      "code": 20,
+                      "msg": "instance abc12 already exist"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "type": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dst_phy_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "file_path": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "type",
+                  "dst_phy_id",
+                  "file_path"
+                ],
+                "x-examples": {
+                  "example-1": {
+                    "uuid": "abc12",
+                    "type": "CAN-SIM",
+                    "dst_phy_id": "can1",
+                    "file_path": "/root/simulations/testproj/cansim.simod"
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "uuid": "abc12",
+                    "type": "CAN-SIM",
+                    "dst_phy_id": "can1",
+                    "file_path": "/root/simulations/testproj/cansim.simod"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "deleted"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "deleted": "abc123"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "deleted": "abc123"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 20,
+                      "msg": "abc3 not found"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 20,
+                      "msg": "abc3 not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "uuid": "abc12"
+                  }
+                }
+              }
+            }
+          },
+          "description": "enter an uuid to be deleted"
+        }
+      }
+    },
+    "/start": {
+      "post": {
+        "summary": "",
+        "operationId": "post-start",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 0
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stop": {
+      "post": {
+        "summary": "",
+        "operationId": "post-stop",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 0
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clearall": {
+      "delete": {
+        "summary": "",
+        "operationId": "delete-clearall",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 0
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modules/{instance}/status": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "isRunning": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isRunning"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "isRunning": true
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "isRunning": true
+                    }
+                  },
+                  "example-2": {
+                    "value": {
+                      "isRunning": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 20,
+                      "msg": "instance abc12s3 not found"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 20,
+                      "msg": "instance abc12s3 not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-status"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "instance",
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
+    "/modules/{instance}/start": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "instance",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "",
+        "operationId": "post-modules-instance-start",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "isRunning": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isRunning"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "isRunning": true
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "isRunning": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 20,
+                      "msg": "instance ab not found"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 20,
+                      "msg": "instance ab not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modules/{instance}/stop": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "instance",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "isRunning": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isRunning"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "isRunning": false
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "isRunning": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 20,
+                      "msg": "instance ab not found"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 20,
+                      "msg": "instance ab not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-modules-instance-stop"
+      }
+    },
+    "/modules/{instance}/activate/{msgId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "instance",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "msgId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "isActivated": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isActivated"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "isActivated": true
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "isActivated": true
+                    }
+                  },
+                  "example-2": {
+                    "value": {
+                      "isActivated": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 1,
+                      "msg": "TypeError: Cannot read property 'activated' of undefined"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 1,
+                      "msg": "TypeError: Cannot read property 'activated' of undefined"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-modules-instance-activate",
+        "description": ""
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-modules-instance-activate-msgId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "isActivated": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isActivated"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "isActivated": true
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "isActivated": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 1,
+                      "msg": "TypeError: Cannot read property 'activated' of undefined"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 1,
+                      "msg": "TypeError: Cannot read property 'activated' of undefined"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-modules-instance-activate-msgId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "isActivated": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isActivated"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "isActivated": false
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "isActivated": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 1,
+                      "msg": "TypeError: Cannot read property 'activated' of undefined"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 1,
+                      "msg": "TypeError: Cannot read property 'activated' of undefined"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modules/{instance}/data": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "instance",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "960": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "1441": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "1640": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    }
+                  },
+                  "required": [
+                    "960",
+                    "1441",
+                    "1640"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "960": [
+                        "0",
+                        "10",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0"
+                      ],
+                      "1441": [
+                        "30",
+                        "30",
+                        "30",
+                        "30",
+                        "7",
+                        "7",
+                        "7",
+                        "7",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "126"
+                      ],
+                      "1640": [
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "255",
+                        "1022",
+                        "0",
+                        "0"
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "960": [
+                        "0",
+                        "10",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0"
+                      ],
+                      "1441": [
+                        "30",
+                        "30",
+                        "30",
+                        "30",
+                        "7",
+                        "7",
+                        "7",
+                        "7",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "126"
+                      ],
+                      "1640": [
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "255",
+                        "1022",
+                        "0",
+                        "0"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-modules-instance-data"
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-modules-instance-data",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "960": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "1441": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "1640": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "144166": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    }
+                  },
+                  "required": [
+                    "960",
+                    "1441",
+                    "1640",
+                    "144166"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "960": [
+                        "0",
+                        "10",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0"
+                      ],
+                      "1441": [
+                        "30",
+                        "30",
+                        "30",
+                        "30",
+                        "7",
+                        "7",
+                        "7",
+                        "7",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "126"
+                      ],
+                      "1640": [
+                        "0"
+                      ],
+                      "144166": [
+                        "30"
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "960": [
+                        "0",
+                        "10",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0"
+                      ],
+                      "1441": [
+                        "30",
+                        "30",
+                        "30",
+                        "30",
+                        "7",
+                        "7",
+                        "7",
+                        "7",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "126"
+                      ],
+                      "1640": [
+                        "0"
+                      ],
+                      "144166": [
+                        "30"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "1640": {
+                    "type": "array",
+                    "items": {
+                      "required": [],
+                      "properties": {}
+                    }
+                  }
+                },
+                "required": [
+                  "1640"
+                ],
+                "x-examples": {
+                  "example-1": {
+                    "1640": [
+                      "0"
+                    ]
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "1640": [
+                      "0"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/modules/{instance}/data/{msgId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "instance",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "msgId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {}
+                  },
+                  "x-examples": {
+                    "example-1": [
+                      "0",
+                      "10",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0"
+                    ]
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": [
+                      "0",
+                      "10",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-modules-instance-data-msgId"
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-modules-instance-data-msgId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {}
+                  },
+                  "x-examples": {
+                    "example-1": [
+                      "0"
+                    ]
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": [
+                      "0"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "description": "",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "required": [],
+                  "properties": {}
+                },
+                "x-examples": {
+                  "example-1": [
+                    "0"
+                  ]
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": [
+                    "0"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "parameters": {
+      "content-type": {
+        "name": "Content-Type",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "application/json"
+      }
+    }
+  }
+}

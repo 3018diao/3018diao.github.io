@@ -1,0 +1,1332 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Trace-service",
+    "version": "1.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "http://192.168.1.99:6001",
+      "description": ""
+    },
+    {
+      "url": "http://192.168.1.135:6001",
+      "description": ""
+    },
+    {
+      "description": "",
+      "url": "http://192.168.1.85:6001"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": "hello world trace-service"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-a"
+      },
+      "parameters": []
+    },
+    "/codec": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Converter"
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "default-can": {
+                        "name": "default-can",
+                        "protocol": "CAN",
+                        "mod": "DBC-CAN",
+                        "path": "dbc_templates.json"
+                      },
+                      "default-arxml": {
+                        "name": "default-arxml",
+                        "protocol": "SOAD",
+                        "mod": "ARXML-ETH",
+                        "path": "Matrix_GNSS.json"
+                      },
+                      "default-someip": {
+                        "name": "default-someip",
+                        "protocol": "SOMEIP"
+                      },
+                      "default-tcpevent": {
+                        "name": "default-tcpevent",
+                        "protocol": "TCPEVENT"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-codec",
+        "description": "Get existing converter"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-codec",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Converter"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "name": "codec-SOAD-testconverter-1021",
+                      "protocol": "SOAD",
+                      "mod": "ARXML-ETH",
+                      "path": "general/arxml/eth/Matrix_GNSS.json"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Create converter",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConverter"
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "tag": "testconverter",
+                    "protocol": "SOAD",
+                    "mod": "ARXML-ETH",
+                    "path": "general/arxml/eth/Matrix_GNSS.json"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-codec",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "name": "default-arxml"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Delete converter",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "name": "default-arxml"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "parameters": []
+      }
+    },
+    "/codec/{id}/someip/name2id": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSomeipName2id"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "V2XMessage": {
+                        "serviceId": 24747,
+                        "method": {
+                          "setSubscription": 2
+                        },
+                        "event": {
+                          "basicSafetyMessageUpdate": 32769,
+                          "subscriptionStatusUpdate": 32771
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 20,
+                      "msg": "id not found"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 0,
+                      "msg": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-codec-:id-someip"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
+    "/codec/{id}/someip/spec": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "",
+        "operationId": "post-codec-id-someip-spec",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "path": "someip/autosar/Service_Positioning.json"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "path": "someip/autosar/Service_Positioning.json"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "x-examples": {
+                  "example-1": {
+                    "path": "someip/autosar/Service_Positioning.json"
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "path": "someip/autosar/Service_Positioning.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/codec/{id}/someip/optional/{serviceId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "serviceId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "method": {
+                        "16391": {
+                          "path": "someip/autosar/Service_Positioning.json"
+                        },
+                        "16399": {
+                          "input": {
+                            "key": {
+                              "present": true
+                            },
+                            "initialEventRequired": {
+                              "present": true
+                            }
+                          },
+                          "return": {
+                            "result": {
+                              "present": true,
+                              "struct": {
+                                "subscriptionId": {
+                                  "present": true
+                                },
+                                "status": {
+                                  "present": true
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "16400": {
+                          "input": {
+                            "initialEventRequired": {
+                              "present": true
+                            }
+                          },
+                          "return": {
+                            "result": {
+                              "present": true,
+                              "struct": {
+                                "subscriptionId": {
+                                  "present": true
+                                },
+                                "status": {
+                                  "present": true
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "16402": {
+                          "input": {
+                            "subscriptionId": {
+                              "present": true
+                            }
+                          },
+                          "return": {
+                            "status": {
+                              "present": true
+                            }
+                          }
+                        },
+                        "16647": {
+                          "input": {},
+                          "return": {
+                            "result": {
+                              "present": false,
+                              "struct": {
+                                "status": {
+                                  "present": true
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "16656": {
+                          "input": {
+                            "initialEventRequired": {
+                              "present": true
+                            }
+                          },
+                          "return": {
+                            "result": {
+                              "present": true,
+                              "struct": {
+                                "subscriptionId": {
+                                  "present": true
+                                },
+                                "status": {
+                                  "present": true
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "16658": {
+                          "input": {
+                            "subscriptionId": {
+                              "present": true
+                            }
+                          },
+                          "return": {
+                            "status": {
+                              "present": true
+                            }
+                          }
+                        }
+                      },
+                      "event": {
+                        "49280": {
+                          "input": {
+                            "subscriptionId": {
+                              "present": true
+                            },
+                            "updateCounter": {
+                              "present": true
+                            },
+                            "totalNoOfMessages": {
+                              "present": true
+                            },
+                            "eventMessageCounter": {
+                              "present": true
+                            },
+                            "noOfResourceElements": {
+                              "present": true
+                            },
+                            "type": {
+                              "present": true
+                            },
+                            "subscriptionStatus": {
+                              "present": true
+                            },
+                            "element": {
+                              "present": true,
+                              "struct": {
+                                "posType": {
+                                  "present": true
+                                },
+                                "messageCounter": {
+                                  "present": false
+                                },
+                                "latitude": {
+                                  "present": false
+                                },
+                                "longitude": {
+                                  "present": false
+                                },
+                                "altitudeMeanSeaLevel": {
+                                  "present": false
+                                },
+                                "altitudeWGS84": {
+                                  "present": false
+                                },
+                                "headingVelocityDirection": {
+                                  "present": false
+                                },
+                                "headingYawAngle": {
+                                  "present": false
+                                },
+                                "accuracyHeadingVelocityDirection": {
+                                  "present": false
+                                },
+                                "accuracyHeadingYawAngle": {
+                                  "present": false
+                                },
+                                "speed3D": {
+                                  "present": false
+                                },
+                                "speed2D": {
+                                  "present": false
+                                },
+                                "velocityNorthDirection": {
+                                  "present": false
+                                },
+                                "velocityEastDirection": {
+                                  "present": false
+                                },
+                                "velocityUpwardDirection": {
+                                  "present": false
+                                },
+                                "accuracySpeed3D": {
+                                  "present": false
+                                },
+                                "accuracySpeed2D": {
+                                  "present": false
+                                },
+                                "accuracyHorizontal": {
+                                  "present": false
+                                },
+                                "accuracyEllipseSemiMajorAxis": {
+                                  "present": false
+                                },
+                                "accuracyEllipseSemiMajorAxisHeading": {
+                                  "present": false
+                                },
+                                "accuracyEllipseSemiMinorAxis": {
+                                  "present": false
+                                },
+                                "accuracyVertical": {
+                                  "present": false
+                                },
+                                "accuracyPitchAngle": {
+                                  "present": false
+                                },
+                                "accuracyRollAngle": {
+                                  "present": false
+                                },
+                                "pitchAngle": {
+                                  "present": false
+                                },
+                                "rollAngle": {
+                                  "present": false
+                                },
+                                "drivingDirection": {
+                                  "present": false
+                                },
+                                "statusFrontCamera": {
+                                  "present": false
+                                },
+                                "statusGNSS": {
+                                  "present": false
+                                },
+                                "statusLandmarks": {
+                                  "present": false
+                                },
+                                "statusTopView": {
+                                  "present": false
+                                },
+                                "statusLidar": {
+                                  "present": false
+                                },
+                                "statusSystem": {
+                                  "present": false
+                                },
+                                "latency": {
+                                  "present": false
+                                },
+                                "preciseLocalTimeSeconds": {
+                                  "present": false
+                                },
+                                "preciseLocalTimeNanoseconds": {
+                                  "present": false
+                                },
+                                "geodeticDatum": {
+                                  "present": false
+                                },
+                                "latitudeAsInt": {
+                                  "present": false
+                                },
+                                "longitudeAsInt": {
+                                  "present": false
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "49536": {
+                          "input": {
+                            "subscriptionId": {
+                              "present": true
+                            },
+                            "updateCounter": {
+                              "present": true
+                            },
+                            "totalNoOfMessages": {
+                              "present": true
+                            },
+                            "eventMessageCounter": {
+                              "present": true
+                            },
+                            "noOfResourceElements": {
+                              "present": true
+                            },
+                            "type": {
+                              "present": true
+                            },
+                            "subscriptionStatus": {
+                              "present": true
+                            },
+                            "element": {
+                              "present": true,
+                              "struct": {
+                                "elementId": {
+                                  "present": true
+                                },
+                                "accuracyIsLaneAccurate": {
+                                  "present": false
+                                },
+                                "numberOfLanes": {
+                                  "present": false
+                                },
+                                "laneNumber": {
+                                  "present": false
+                                },
+                                "linkId": {
+                                  "present": false
+                                },
+                                "distanceOnLink": {
+                                  "present": false
+                                },
+                                "offsetOnLane": {
+                                  "present": false
+                                },
+                                "laneId": {
+                                  "present": false
+                                },
+                                "laneGroupId": {
+                                  "present": false
+                                },
+                                "tileId": {
+                                  "present": false
+                                },
+                                "updateRegionId": {
+                                  "present": false
+                                },
+                                "productId": {
+                                  "present": false
+                                },
+                                "distanceLeftMarking": {
+                                  "present": false
+                                },
+                                "distanceRightMarking": {
+                                  "present": false
+                                },
+                                "locationIsCarTrain": {
+                                  "present": false
+                                },
+                                "locationIsFerry": {
+                                  "present": false
+                                },
+                                "locationIsParkingStructure": {
+                                  "present": false
+                                },
+                                "locationIsParkingArea": {
+                                  "present": false
+                                },
+                                "offRoadStatus": {
+                                  "present": false
+                                },
+                                "gradient": {
+                                  "present": false
+                                },
+                                "slope": {
+                                  "present": false
+                                },
+                                "trafficDirection": {
+                                  "present": false
+                                },
+                                "laneType": {
+                                  "present": false
+                                },
+                                "isMotorwayRoad": {
+                                  "present": false
+                                },
+                                "isUrbanRoad": {
+                                  "present": false
+                                },
+                                "mapMatchingSource": {
+                                  "present": false
+                                },
+                                "preciseLocalTimeSeconds": {
+                                  "present": false
+                                },
+                                "preciseLocalTimeNanoseconds": {
+                                  "present": false
+                                },
+                                "directionOnLink": {
+                                  "present": false
+                                },
+                                "floornumber": {
+                                  "present": false
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-codec-id-someip-optional"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-codec-id-someip-optional-serviceId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "path": "someip/autosar/Service_Positioning.json"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "path": "someip/autosar/Service_Positioning.json"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "x-examples": {
+                  "example-1": {
+                    "path": "someip/autosar/Service_Positioning.json"
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "path": "someip/autosar/Service_Positioning.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/codec/{id}/someip/optional/{serviceId}/method/{methodId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "serviceId",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "methodId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-codec-id-someip-optional-serviceId-method-methodId"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-codec-id-someip-optional-serviceId-method-methodId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/codec/{id}/someip/optional/{serviceId}/event/{eventId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "serviceId",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "eventId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-codec-id-someip-optional-serviceId-event-eventId"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-codec-id-someip-optional-serviceId-event-eventId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/someip/config/ports": {
+      "post": {
+        "summary": "",
+        "operationId": "post-someip-config-ports",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/configPorts"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "added": [
+                        {
+                          "ipv4": false,
+                          "vlanId": 0,
+                          "srcPort": "3",
+                          "dstPort": 0,
+                          "tag": "someip"
+                        },
+                        {
+                          "ipv4": false,
+                          "vlanId": 0,
+                          "srcPort": 0,
+                          "dstPort": "3",
+                          "tag": "someip"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_err"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 20,
+                      "msg": "expect 'tcp' or 'udp' protocol, got "
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "tcp"
+            },
+            "in": "query",
+            "name": "protocol",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "ports": 1
+                  }
+                },
+                "properties": {
+                  "ports": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ports"
+                ]
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "ports": "3"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProtocolTag": {
+        "title": "ProtocolTag",
+        "type": "object",
+        "properties": {
+          "ipv4": {
+            "type": "boolean"
+          },
+          "srcIp": {
+            "type": "string"
+          },
+          "dstIp": {
+            "type": "string"
+          },
+          "vlanId": {
+            "type": "number"
+          },
+          "srcPort": {
+            "type": "number"
+          },
+          "dstPort": {
+            "type": "number"
+          },
+          "tag": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "srcIp",
+          "dstIp"
+        ]
+      },
+      "TracingChannel": {
+        "title": "TracingChannel",
+        "type": "string"
+      },
+      "Converter": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "name": "default-arxml",
+            "protocol": "SOAD",
+            "mod": "ARXML-ETH",
+            "path": "Matrix_GNSS.json"
+          }
+        },
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "protocol": {
+            "type": "string",
+            "minLength": 1,
+            "description": "'SOAD' | 'SOMEIP' | 'CAN' | 'TCPEVENT'"
+          },
+          "mod": {
+            "type": "string",
+            "minLength": 1,
+            "description": "'ARXML-ETH' | 'DBC-CAN'"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "name",
+          "protocol"
+        ]
+      },
+      "CreateConverter": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "minLength": 1
+          },
+          "protocol": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mod": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "tag",
+          "protocol",
+          "mod",
+          "path"
+        ],
+        "x-examples": {
+          "example-1": {
+            "tag": "testconverter",
+            "protocol": "SOAD",
+            "mod": "ARXML-ETH",
+            "path": "general/arxml/eth/xxxx.json",
+            "value": {
+              "tag": "testconverter",
+              "protocol": "SOAD",
+              "mod": "ARXML-ETH",
+              "path": "general/arxml/eth/xxxx.json"
+            }
+          }
+        }
+      },
+      "Response_err": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "msg": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "code",
+          "msg"
+        ],
+        "x-examples": {
+          "example-1": {
+            "code": 20,
+            "msg": "id not found",
+            "value": {
+              "code": 20,
+              "msg": "id not found"
+            }
+          }
+        }
+      },
+      "GetSomeipName2id": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "V2XMessage": {
+            "type": "object",
+            "properties": {
+              "serviceId": {
+                "type": "number"
+              },
+              "method": {
+                "type": "object",
+                "properties": {
+                  "setSubscription": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "setSubscription"
+                ]
+              },
+              "event": {
+                "type": "object",
+                "properties": {
+                  "basicSafetyMessageUpdate": {
+                    "type": "number"
+                  },
+                  "subscriptionStatusUpdate": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "basicSafetyMessageUpdate",
+                  "subscriptionStatusUpdate"
+                ]
+              }
+            },
+            "required": [
+              "serviceId",
+              "method",
+              "event"
+            ]
+          }
+        },
+        "required": [
+          "V2XMessage"
+        ],
+        "x-examples": {
+          "example-1": {
+            "V2XMessage": {
+              "serviceId": 24747,
+              "method": {
+                "setSubscription": 2
+              },
+              "event": {
+                "basicSafetyMessageUpdate": 32769,
+                "subscriptionStatusUpdate": 32771
+              }
+            }
+          }
+        }
+      },
+      "configPorts": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "added": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "required": [
+                "ipv4",
+                "vlanId",
+                "srcPort",
+                "dstPort",
+                "tag"
+              ],
+              "properties": {
+                "ipv4": {
+                  "type": "boolean"
+                },
+                "vlanId": {
+                  "type": "number"
+                },
+                "srcPort": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dstPort": {
+                  "type": "number"
+                },
+                "tag": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "added"
+        ],
+        "x-examples": {
+          "example-1": {
+            "added": [
+              {
+                "ipv4": false,
+                "vlanId": 0,
+                "srcPort": "3",
+                "dstPort": 0,
+                "tag": "someip"
+              },
+              {
+                "ipv4": false,
+                "vlanId": 0,
+                "srcPort": 0,
+                "dstPort": "3",
+                "tag": "someip"
+              }
+            ],
+            "value": {
+              "added": [
+                {
+                  "ipv4": false,
+                  "vlanId": 0,
+                  "srcPort": "3",
+                  "dstPort": 0,
+                  "tag": "someip"
+                },
+                {
+                  "ipv4": false,
+                  "vlanId": 0,
+                  "srcPort": 0,
+                  "dstPort": "3",
+                  "tag": "someip"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "responses": {},
+    "examples": {},
+    "parameters": {
+      "content": {
+        "name": "Content-Type",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "application/json"
+      }
+    }
+  }
+}

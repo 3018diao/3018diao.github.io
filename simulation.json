@@ -1,0 +1,1350 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "simulation",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://192.168.1.99:8001"
+    },
+    {
+      "url": "http://192.168.1.27:8001",
+      "description": ""
+    },
+    {
+      "description": "",
+      "url": "http://192.168.1.135:8001"
+    },
+    {
+      "url": "http://192.168.1.85:8001",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": "hello world simulation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-a"
+      },
+      "parameters": []
+    },
+    "/ipdu/eth/{portID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "example": "104"
+          },
+          "name": "portID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Create ETH PDU",
+        "operationId": "post-ipdu-eth-portID",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "channel": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "pdus": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "id",
+                          "len"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "len": {
+                            "type": "number"
+                          },
+                          "parsed": {
+                            "type": "object",
+                            "properties": {
+                              "signals": {
+                                "type": "array",
+                                "uniqueItems": true,
+                                "minItems": 1,
+                                "items": {
+                                  "required": [
+                                    "raw"
+                                  ],
+                                  "properties": {
+                                    "raw": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": [
+                              "signals"
+                            ]
+                          },
+                          "data": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "data": {
+                                "type": "array",
+                                "items": {
+                                  "required": [],
+                                  "properties": {}
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "data"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "buffer": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "required": [],
+                            "properties": {}
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "data"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "channel",
+                    "pdus",
+                    "buffer"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "channel": "ipdu.eth.104.tx.33_33_00_00_00_09.0.0.4.fd_53_7c_b8_03_83_00_04_00_00_00_00_00_01_01_b5.ff_14_00_00_00_00_00_00_00_00_00_00_00_00_00_09.42556.42557.udp.soad",
+                      "pdus": [
+                        {
+                          "id": 7,
+                          "len": 8,
+                          "parsed": {
+                            "signals": [
+                              {
+                                "raw": "12500"
+                              },
+                              {
+                                "phys": "0"
+                              },
+                              {
+                                "txt": "Init"
+                              },
+                              {
+                                "raw": "12500"
+                              },
+                              {
+                                "phys": "14"
+                              }
+                            ]
+                          },
+                          "data": {
+                            "type": "Buffer",
+                            "data": [
+                              212,
+                              48,
+                              106,
+                              152,
+                              255,
+                              79,
+                              13,
+                              115
+                            ]
+                          }
+                        }
+                      ],
+                      "buffer": {
+                        "type": "Buffer",
+                        "data": [
+                          0,
+                          0,
+                          0,
+                          7,
+                          0,
+                          0,
+                          0,
+                          8,
+                          212,
+                          48,
+                          106,
+                          152,
+                          255,
+                          79,
+                          13,
+                          115
+                        ]
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "channel": "ipdu.eth.104.tx.33_33_00_00_00_09.0.0.4.fd_53_7c_b8_03_83_00_04_00_00_00_00_00_01_01_b5.ff_14_00_00_00_00_00_00_00_00_00_00_00_00_00_09.42556.42557.udp.soad",
+                      "pdus": [
+                        {
+                          "id": 7,
+                          "len": 8,
+                          "parsed": {
+                            "signals": [
+                              {
+                                "raw": "12500"
+                              },
+                              {
+                                "phys": "0"
+                              },
+                              {
+                                "txt": "Init"
+                              },
+                              {
+                                "raw": "12500"
+                              },
+                              {
+                                "phys": "14"
+                              }
+                            ]
+                          },
+                          "data": {
+                            "type": "Buffer",
+                            "data": [
+                              212,
+                              48,
+                              106,
+                              152,
+                              255,
+                              79,
+                              13,
+                              115
+                            ]
+                          }
+                        }
+                      ],
+                      "buffer": {
+                        "type": "Buffer",
+                        "data": [
+                          0,
+                          0,
+                          0,
+                          7,
+                          0,
+                          0,
+                          0,
+                          8,
+                          212,
+                          48,
+                          106,
+                          152,
+                          255,
+                          79,
+                          13,
+                          115
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EthPostBody"
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "vlan": "4",
+                    "srcIP": "fd53:7cb8:0383:0004:0000:0000:0001:01b5",
+                    "dstIP": "ff14:0000:0000:0000:0000:0000:0000:0009",
+                    "srcPort": "42556",
+                    "dstPort": "42557",
+                    "pdus": [
+                      {
+                        "id": 7,
+                        "len": 8,
+                        "parsed": {
+                          "signals": [
+                            {
+                              "raw": "12500"
+                            },
+                            {
+                              "phys": "0"
+                            },
+                            {
+                              "txt": "Init"
+                            },
+                            {
+                              "raw": "12500"
+                            },
+                            {
+                              "phys": "14"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      },
+      "get": {
+        "summary": "Send ETH PDU",
+        "operationId": "get-ipdu-eth-portID",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EthGetResponse"
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": [
+                      {
+                        "name": "POS_GNSS_Geschw_Nord",
+                        "raw": "32767",
+                        "phys": "202.67000000000002",
+                        "txt": "Fehler"
+                      },
+                      {
+                        "name": "POS_GNSS_Geschw_Ost",
+                        "raw": "32767",
+                        "phys": "202.67000000000002",
+                        "txt": "Fehler"
+                      },
+                      {
+                        "name": "POS_GNSS_Geschw_ue_Grund",
+                        "raw": "16383",
+                        "phys": "163.83",
+                        "txt": "Fehler"
+                      },
+                      {
+                        "name": "POS_GNSS_Geschw_Vertikal",
+                        "raw": "32767",
+                        "phys": "202.67000000000002",
+                        "txt": "Fehler"
+                      },
+                      {
+                        "name": "POS_GNSS_Nachrichtenpaket_ID02",
+                        "raw": "0",
+                        "phys": "0"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "7"
+            },
+            "in": "query",
+            "name": "id"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "default-arxml"
+            },
+            "in": "query",
+            "name": "converter"
+          }
+        ],
+        "description": "Send ETH PDU"
+      }
+    },
+    "/ipdu/can/{portID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "example": "can1"
+          },
+          "name": "portID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Send CAN PDU",
+        "operationId": "post-ipdu-can-portID",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": "OK"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CANMessage"
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "id": "0x3C0",
+                    "payload": "00 FF 01 02 03 04 05 06",
+                    "isExtended": false,
+                    "isCANFD": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Send can pdu"
+      }
+    },
+    "/projects/{project}": {
+      "get": {
+        "summary": "Return file list of specific project",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectGet"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "path": "/root/simulations/proj1/b.txt",
+                      "name": "b.txt",
+                      "size": 0,
+                      "extension": ".txt",
+                      "type": "file"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 31,
+                      "msg": "dir proj122 not exist"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-projects",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "b.txt"
+            },
+            "in": "query",
+            "name": "dirpath"
+          }
+        ],
+        "description": "Return file list of specific project"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "example": "proj1"
+          },
+          "name": "project",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "delete": {
+        "summary": "Delete project",
+        "operationId": "delete-projects-project",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "deleted"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "deleted": "proj4"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "deleted": "proj1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 31,
+                      "msg": "project proj4 not exist"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Delete project"
+      }
+    },
+    "/projects/{project}/files": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 21,
+                      "msg": "request params error. req.query.filepath not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-projects",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "b.txt"
+            },
+            "in": "query",
+            "name": "filepath",
+            "required": true
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "example": "proj1"
+          },
+          "name": "project",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "",
+        "operationId": "post-projects-project-files",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectPostRes"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "files": {
+                        "fieldname": "file",
+                        "originalname": "student.txt",
+                        "encoding": "7bit",
+                        "mimetype": "text/plain",
+                        "destination": "/root/simulations/proj1/",
+                        "filename": "student.txt",
+                        "path": "/root/simulations/proj1/student.txt",
+                        "size": 27
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Upload file to given project",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "filepath"
+          }
+        ]
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-projects-project-files",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "deleted"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "deleted": "proj1/student.txt"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "deleted": "proj1/student.txt"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "b.txt"
+            },
+            "in": "query",
+            "name": "filepath"
+          }
+        ],
+        "description": "Delete file under given project"
+      }
+    },
+    "/current": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-current"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-current",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "project"
+          }
+        ],
+        "description": "Load project"
+      }
+    },
+    "/current/stop": {
+      "post": {
+        "summary": "",
+        "operationId": "post-current-stop",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/modules/{name}/status": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "name",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-modules-name-status"
+      }
+    },
+    "/modules/{name}/start": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "name",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "",
+        "operationId": "post-modules-name-start",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/modules/{name}/stop": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "name",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "",
+        "operationId": "post-modules-name-stop",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/modules/{name}/activate/{msgId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "name",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "msgId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-modules-name-activate"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-modules-name-activate-msgId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-modules-name-activate-msgId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/modules/{name}/data": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "name",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-modules-name-data"
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-modules-name-data",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/modules/{name}/data/{msgId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "name",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "msgId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-modules-name-data-msgId"
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-modules-name-data-msgId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CANMessage": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "id": "0x3C0",
+            "payload": "00 FF 01 02 03 04 05 06",
+            "isExtended": false,
+            "isCANFD": false,
+            "value": {
+              "id": "0x3C0",
+              "payload": "00 FF 01 02 03 04 05 06",
+              "isExtended": false,
+              "isCANFD": false
+            }
+          }
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "payload": {
+            "type": "string",
+            "minLength": 1
+          },
+          "isExtended": {
+            "type": "boolean"
+          },
+          "isCANFD": {
+            "type": "boolean"
+          },
+          "BRS": {
+            "type": "boolean"
+          },
+          "RTR": {
+            "type": "boolean"
+          },
+          "SRR": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "payload"
+        ]
+      },
+      "EthGetResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "raw": {
+            "type": "string",
+            "minLength": 1
+          },
+          "phys": {
+            "type": "string",
+            "minLength": 1
+          },
+          "txt": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "name",
+          "raw",
+          "phys",
+          "txt"
+        ],
+        "x-examples": {
+          "example-1": {
+            "name": "POS_GNSS_Geschw_Nord",
+            "raw": "32767",
+            "phys": "202.67000000000002",
+            "txt": "Fehler"
+          }
+        }
+      },
+      "EthPdu": {
+        "title": "EthPdu",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "value": {
+              "id": 7,
+              "len": 8,
+              "parsed": {
+                "signals": [
+                  {
+                    "raw": "12500"
+                  },
+                  {
+                    "phys": "0"
+                  },
+                  {
+                    "txt": "Init"
+                  },
+                  {
+                    "raw": "12500"
+                  },
+                  {
+                    "phys": "14"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "len": {
+            "type": "number"
+          },
+          "parsed": {
+            "type": "object",
+            "properties": {
+              "signals": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EthSignal"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "len"
+        ]
+      },
+      "EthSignal": {
+        "title": "EthSignal",
+        "type": "object",
+        "properties": {
+          "raw": {
+            "type": "string"
+          },
+          "phys": {
+            "type": "string"
+          },
+          "txt": {
+            "type": "string"
+          }
+        }
+      },
+      "EthPostBody": {
+        "title": "EthPostBody",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "value": {
+              "vlan": "4",
+              "srcIP": "fd53:7cb8:0383:0004:0000:0000:0001:01b5",
+              "dstIP": "ff14:0000:0000:0000:0000:0000:0000:0009",
+              "srcPort": "42556",
+              "dstPort": "42557",
+              "pdus": [
+                {
+                  "id": 7,
+                  "len": 8,
+                  "parsed": {
+                    "signals": [
+                      {
+                        "raw": "12500"
+                      },
+                      {
+                        "phys": "0"
+                      },
+                      {
+                        "txt": "Init"
+                      },
+                      {
+                        "raw": "12500"
+                      },
+                      {
+                        "phys": "14"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "properties": {
+          "vlan": {
+            "type": "string"
+          },
+          "srcIP": {
+            "type": "string"
+          },
+          "dstIP": {
+            "type": "string"
+          },
+          "srcPort": {
+            "type": "string"
+          },
+          "dstPort": {
+            "type": "string"
+          },
+          "converters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pdus": {
+            "$ref": "#/components/schemas/EthPdu"
+          }
+        },
+        "required": [
+          "vlan",
+          "srcIP",
+          "dstIP",
+          "srcPort",
+          "dstPort",
+          "pdus"
+        ],
+        "description": ""
+      },
+      "ProjectGet": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "size": {
+            "type": "number"
+          },
+          "extension": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "path",
+          "name",
+          "size",
+          "extension",
+          "type"
+        ],
+        "x-examples": {
+          "example-1": {
+            "path": "/root/simulations/proj1/b.txt",
+            "name": "b.txt",
+            "size": 0,
+            "extension": ".txt",
+            "type": "file",
+            "value": {
+              "path": "/root/simulations/proj1/b.txt",
+              "name": "b.txt",
+              "size": 0,
+              "extension": ".txt",
+              "type": "file"
+            }
+          }
+        }
+      },
+      "Response": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "msg": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "code",
+          "msg"
+        ],
+        "x-examples": {
+          "example-1": {
+            "code": 31,
+            "msg": "dir proj122 not exist"
+          }
+        }
+      },
+      "ProjectPostRes": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "files": {
+            "type": "object",
+            "properties": {
+              "fieldname": {
+                "type": "string",
+                "minLength": 1
+              },
+              "originalname": {
+                "type": "string",
+                "minLength": 1
+              },
+              "encoding": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mimetype": {
+                "type": "string",
+                "minLength": 1
+              },
+              "destination": {
+                "type": "string",
+                "minLength": 1
+              },
+              "filename": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "size": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "fieldname",
+              "originalname",
+              "encoding",
+              "mimetype",
+              "destination",
+              "filename",
+              "path",
+              "size"
+            ]
+          }
+        },
+        "required": [
+          "files"
+        ],
+        "x-examples": {
+          "example-1": {
+            "files": {
+              "fieldname": "file",
+              "originalname": "student.txt",
+              "encoding": "7bit",
+              "mimetype": "text/plain",
+              "destination": "/root/simulations/proj1/",
+              "filename": "student.txt",
+              "path": "/root/simulations/proj1/student.txt",
+              "size": 27
+            },
+            "value": {
+              "files": {
+                "fieldname": "file",
+                "originalname": "student.txt",
+                "encoding": "7bit",
+                "mimetype": "text/plain",
+                "destination": "/root/simulations/proj1/",
+                "filename": "student.txt",
+                "path": "/root/simulations/proj1/student.txt",
+                "size": 27
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

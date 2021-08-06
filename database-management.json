@@ -1,0 +1,616 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Database-management",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://192.168.1.99:9001",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": "hello world database-management"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "",
+        "description": "Test get database-router"
+      }
+    },
+    "/general/arxml/eth": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_file"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "files": [
+                        "E3_1_2_Premium_V12.03.20F_P03_AR430_20200501_HCP3_CN1_Systempartition_AP.json",
+                        "Matrix_GNSS.json"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-general-armxl-eth"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-general-armxl-eth",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_success"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "file": "file test3.arxml uploaded. start to convert. it may take several minutes."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 21,
+                      "msg": "empty file name."
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 30,
+                      "msg": "invalid file format. expect .arxml, got .zip"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-general-armxl-eth",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 0
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_err"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 31,
+                      "msg": "file not exist. test_eth.json"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "file",
+            "description": "file name"
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/someip/service/autosar": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_file"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "files": [
+                        "Service_Positioning.json"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-someip-service-autosar"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-someip-service-autosar",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "file"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "file": "file test_someip_autosar.arxml uploaded and converted succeeded"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "file": "file test_someip_autosar.arxml uploaded and converted succeeded"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_err"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 30,
+                      "msg": "invalid file format. expect .arxml, got .zip"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "file": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-someip-service-autosar",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_err"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "file",
+            "description": "file name"
+          }
+        ]
+      }
+    },
+    "/someip/service/fibex": {
+      "get": {
+        "summary": "",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_file"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "files": [
+                        "0x190_VoiceManagerService_V1.8.10F.json",
+                        "0x60AB_Service_V2XMessage-ID-REF-Fix-Typo-Fix-FIELD-LENGTH-Fix-PP-Fix.json"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 30,
+                      "msg": "invalid file format. expect .xml(fibex-xml), got .arxml"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-someip-service-fibex"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-someip-service-fibex",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "file"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "file": "file test_someip_fibex.xml uploaded and converted succeeded."
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "file": "file test_someip_fibex.xml uploaded and converted succeeded."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_err"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 0,
+                      "msg": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "file": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-someip-service-fibex",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "code": 0
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_err"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": 31,
+                      "msg": "file not exist. test_eth.json"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Response_err": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "msg": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "code",
+          "msg"
+        ],
+        "x-examples": {
+          "example-1": {
+            "code": 21,
+            "msg": "convert arxml failed.",
+            "value": {
+              "code": 21,
+              "msg": "convert arxml failed."
+            }
+          }
+        }
+      },
+      "Response_success": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "x-examples": {
+          "example-1": {
+            "file": "file test3.arxml uploaded. start to convert. it may take several minutes."
+          }
+        }
+      },
+      "Response_file": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "files": [
+              "0x190_VoiceManagerService_V1.8.10F.json",
+              "0x60AB_Service_V2XMessage-ID-REF-Fix-Typo-Fix-FIELD-LENGTH-Fix-PP-Fix.json"
+            ]
+          }
+        },
+        "properties": {
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "files"
+        ]
+      }
+    },
+    "parameters": {}
+  }
+}
