@@ -1,0 +1,367 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Trace-service",
+    "description": "",
+    "contact": {}
+  },
+  "host": "192.168.1.27:6001",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/converters": {
+      "get": {
+        "description": "Your GET endpoint",
+        "summary": "get-converters",
+        "operationId": "get-converters",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ConvertersResponse"
+            },
+            "examples": {
+              "application/json": {
+                "default-can": {
+                  "name": "default-can",
+                  "protocol": "CAN",
+                  "mod": "DBC-CAN",
+                  "path": "dbc_templates.json"
+                },
+                "default-arxml": {
+                  "name": "default-arxml",
+                  "protocol": "SOAD",
+                  "mod": "ARXML-ETH",
+                  "path": "Matrix_GNSS.json"
+                },
+                "default-someip": {
+                  "name": "default-someip",
+                  "protocol": "SOMEIP"
+                },
+                "default-tcpevent": {
+                  "name": "default-tcpevent",
+                  "protocol": "TCPEVENT"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "params are blank",
+            "headers": {}
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "summary": "post-converters",
+        "operationId": "post-converters",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Converter"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Converter"
+            },
+            "examples": {
+              "application/json": {
+                "name": "default-arxml",
+                "protocol": "SOAD",
+                "mod": "ARXML-ETH",
+                "path": "Matrix_GNSS.json"
+              }
+            },
+            "headers": {}
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "summary": "delete-converters",
+        "operationId": "delete-converters",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ConvertersRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ConvertersResponse1"
+            },
+            "examples": {
+              "application/json": {
+                "name": "default-arxml"
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "param name is blank",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/tags/{protocol}": {
+      "get": {
+        "description": "Your GET endpoint",
+        "summary": "get-tags",
+        "operationId": "get-tags",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "protocol",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "tcp or udp"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProtocolTag"
+              }
+            },
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/tracing": {
+      "get": {
+        "description": "Your GET endpoint",
+        "summary": "get-tracing",
+        "operationId": "get-tracing",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": [
+                "ipdu.eth.*.tx.*"
+              ]
+            },
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/forwarding/": {
+      "get": {
+        "description": "Your GET endpoint",
+        "summary": "get-forwarding",
+        "operationId": "get-forwarding",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/spec": {
+      "post": {
+        "description": "",
+        "summary": "post-spec",
+        "operationId": "post-spec",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ProtocolTag": {
+      "title": "ProtocolTag",
+      "type": "object",
+      "properties": {
+        "ipv4": {
+          "type": "boolean"
+        },
+        "srcIp": {
+          "type": "string"
+        },
+        "dstIp": {
+          "type": "string"
+        },
+        "vlanId": {
+          "type": "number",
+          "format": "double"
+        },
+        "srcPort": {
+          "type": "number",
+          "format": "double"
+        },
+        "dstPort": {
+          "type": "number",
+          "format": "double"
+        },
+        "tag": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "srcIp",
+        "dstIp"
+      ]
+    },
+    "Converter": {
+      "title": "Converter",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "protocol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mod": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "protocol"
+      ]
+    },
+    "ConvertersRequest": {
+      "title": "ConvertersRequest",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "ConvertersResponse": {
+      "title": "ConvertersResponse",
+      "type": "object",
+      "properties": {
+        "default-can": {
+          "$ref": "#/definitions/Converter"
+        },
+        "default-arxml": {
+          "$ref": "#/definitions/Converter"
+        },
+        "default-someip": {
+          "$ref": "#/definitions/Converter"
+        },
+        "default-tcpevent": {
+          "$ref": "#/definitions/Converter"
+        }
+      }
+    },
+    "ConvertersResponse1": {
+      "title": "ConvertersResponse1",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  "tags": []
+}
